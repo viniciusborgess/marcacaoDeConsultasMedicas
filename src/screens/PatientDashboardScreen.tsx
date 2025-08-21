@@ -103,6 +103,13 @@ const PatientDashboardScreen: React.FC = () => {
           buttonStyle={styles.buttonStyle}
         />
 
+        <Button
+          title="Configurações"
+          onPress={() => navigation.navigate('Settings')}
+          containerStyle={styles.button as ViewStyle}
+          buttonStyle={styles.settingsButton}
+        />
+
         {loading ? (
           <LoadingText>Carregando consultas...</LoadingText>
         ) : appointments.length === 0 ? (
@@ -123,7 +130,6 @@ const PatientDashboardScreen: React.FC = () => {
                 <Text style={styles.specialty as TextStyle}>
                   {appointment.specialty}
                 </Text>
-
                 <StatusBadge status={appointment.status}>
                   <StatusText status={appointment.status}>
                     {getStatusText(appointment.status)}
@@ -161,6 +167,10 @@ const styles = {
     backgroundColor: theme.colors.error,
     paddingVertical: 12,
   },
+  settingsButton: {
+    backgroundColor: theme.colors.secondary,
+    paddingVertical: 12,
+  },
   doctorName: {
     fontSize: 18,
     fontWeight: '700',
@@ -180,7 +190,7 @@ const styles = {
     fontSize: 16,
     fontWeight: '700',
     color: theme.colors.text,
-  }
+  },
 };
 
 const Container = styled.View`

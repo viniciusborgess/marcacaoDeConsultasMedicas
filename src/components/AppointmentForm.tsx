@@ -4,6 +4,7 @@ import { Button, Input, Text } from 'react-native-elements';
 import { Platform, View, TouchableOpacity } from 'react-native';
 import theme from '../styles/theme';
 import { Doctor } from '../types/doctors';
+import { Appointment } from '../types/appointments';
 
 const doctors: Doctor[] = [
    {
@@ -107,7 +108,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ onSubmit }) => {
    };
 
    const isTimeSlotAvailable = (time: string) => {
-      // Aqui você pode adicionar lógica para verificar se o horário está disponível (Faremos isto nas próximas aulas)
+      // Aqui você pode adicionar lógica para verificar se o horário está disponível
       // Por exemplo, verificar se já existe uma consulta agendada para este horário
       return true;
    };
@@ -294,4 +295,4 @@ const SubmitButton = styled(Button)`
   margin-top: ${theme.spacing.large}px;
 `;
 
-export default AppointmentForm;
+export default AppointmentForm; 

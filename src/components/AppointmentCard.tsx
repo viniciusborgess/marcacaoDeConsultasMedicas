@@ -1,7 +1,7 @@
-mport React from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
 import { ViewStyle } from 'react-native';
-import { Card, Text, Avatar } from '@rneui/themed';
+import { Card, Text, Avatar } from 'react-native-elements';
 import theme from '../styles/theme';
 
 interface AppointmentCardProps {
@@ -36,36 +36,38 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
 
   return (
     <Card containerStyle={[styles.card, style]}>
-      <DoctorInfo>
-        <Avatar
-          size="medium"
-          rounded
-          source={{ uri: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 10)}.jpg` }}
-          containerStyle={styles.avatar}
-        />
-        <TextContainer>
-          <DoctorName>{doctorName}</DoctorName>
-          <Specialty>{specialty}</Specialty>
-        </TextContainer>
-      </DoctorInfo>
+      <CardContent>
+        <DoctorInfo>
+          <Avatar
+            size="medium"
+            rounded
+            source={{ uri: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 10)}.jpg` }}
+            containerStyle={styles.avatar}
+          />
+          <TextContainer>
+            <DoctorName>{doctorName}</DoctorName>
+            <Specialty>{specialty}</Specialty>
+          </TextContainer>
+        </DoctorInfo>
 
-      <AppointmentInfo>
-        <InfoRow>
-          <InfoLabel>Data:</InfoLabel>
-          <InfoValue>{date}</InfoValue>
-        </InfoRow>
-        <InfoRow>
-          <InfoLabel>Horário:</InfoLabel>
-          <InfoValue>{time}</InfoValue>
-        </InfoRow>
-      </AppointmentInfo>
+        <AppointmentInfo>
+          <InfoRow>
+            <InfoLabel>Data:</InfoLabel>
+            <InfoValue>{date}</InfoValue>
+          </InfoRow>
+          <InfoRow>
+            <InfoLabel>Horário:</InfoLabel>
+            <InfoValue>{time}</InfoValue>
+          </InfoRow>
+        </AppointmentInfo>
 
-      <StatusContainer>
-        <StatusDot color={getStatusColor()} />
-        <Text style={{ color: getStatusColor() }}>
-          {status === 'confirmed' ? 'Confirmada' : status === 'cancelled' ? 'Cancelada' : 'Pendente'}
-        </Text>
-      </StatusContainer>
+        <StatusContainer>
+          <StatusDot color={getStatusColor()} />
+          <StatusText color={getStatusColor()}>
+            {status === 'confirmed' ? 'Confirmada' : status === 'cancelled' ? 'Cancelada' : 'Pendente'}
+          </StatusText>
+        </StatusContainer>
+      </CardContent>
     </Card>
   );
 };
@@ -145,14 +147,14 @@ const StatusDot = styled.View<{ color: string }>`
   width: 8px;
   height: 8px;
   border-radius: 4px;
-  background-color: ${(props: { color: string }) => props.color};
+  background-color: ${props => props.color};
   margin-right: 8px;
 `;
 
 const StatusText = styled.Text<{ color: string }>`
-  fontSize: 14;
-  color: ${(props: { color: string }) => props.color};
-  fontWeight: 500;
+  font-size: 14px;
+  color: ${props => props.color};
+  font-weight: 500;
 `;
 
-export default AppointmentCard;
+export default AppointmentCard; 

@@ -7,6 +7,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
 import theme from '../styles/theme';
 import Header from '../components/Header';
+import { ViewStyle } from 'react-native';
 
 type ProfileScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Profile'>;
@@ -49,6 +50,13 @@ const ProfileScreen: React.FC = () => {
         </ProfileCard>
 
         <Button
+          title="Editar Perfil"
+          onPress={() => navigation.navigate('EditProfile' as any)}
+          containerStyle={styles.button as ViewStyle}
+          buttonStyle={styles.editButton}
+        />
+
+        <Button
           title="Voltar"
           onPress={() => navigation.goBack()}
           containerStyle={styles.button as ViewStyle}
@@ -76,6 +84,10 @@ const styles = {
   },
   buttonStyle: {
     backgroundColor: theme.colors.primary,
+    paddingVertical: 12,
+  },
+  editButton: {
+    backgroundColor: theme.colors.success,
     paddingVertical: 12,
   },
   logoutButton: {
@@ -132,7 +144,7 @@ const Email = styled.Text`
 `;
 
 const RoleBadge = styled.View<{ role: string }>`
-  background-color: ${(props) => {
+  background-color: ${(props: { role: string }) => {
     switch (props.role) {
       case 'admin':
         return theme.colors.primary + '20';

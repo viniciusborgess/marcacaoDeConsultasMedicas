@@ -10,6 +10,7 @@ import theme from '../styles/theme';
 import Header from '../components/Header';
 import DoctorList from '../components/DoctorList';
 import TimeSlotList from '../components/TimeSlotList';
+import { notificationService } from '../services/notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type CreateAppointmentScreenProps = {
@@ -110,6 +111,9 @@ const CreateAppointmentScreen: React.FC = () => {
 
       // Salva lista atualizada
       await AsyncStorage.setItem('@MedicalApp:appointments', JSON.stringify(appointments));
+
+      // Envia notificação para o médico
+      await notificationService.notifyNewAppointment(selectedDoctor.id, newAppointment);
 
       alert('Consulta agendada com sucesso!');
       navigation.goBack();

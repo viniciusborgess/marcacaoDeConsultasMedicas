@@ -2,6 +2,7 @@
  * Tipos relacionados a médicos
  * Este arquivo contém todas as definições de tipos necessárias para o gerenciamento de médicos
  */
+
 /**
  * Representa um médico no sistema
  * @property id - Identificador único do médico
@@ -10,8 +11,8 @@
  * @property image - URL da foto do médico
  */
 export type Doctor = {
-    id: string;
-    name: string;
-    specialty: string;
-    image: string;
-  };
+  id: string;
+  name: string;
+  specialty: string;
+  image: string;
+}; 
