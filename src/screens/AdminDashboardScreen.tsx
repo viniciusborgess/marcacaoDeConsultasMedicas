@@ -17,6 +17,9 @@ type AdminDashboardScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'AdminDashboard'>;
 };
 
+/**
+ * Interface para dados de consulta
+ */
 interface Appointment {
   id: string;
   patientId: string;
@@ -28,6 +31,9 @@ interface Appointment {
   status: 'pending' | 'confirmed' | 'cancelled';
 }
 
+/**
+ * Interface para dados de usuário
+ */
 interface User {
   id: string;
   name: string;
@@ -39,6 +45,9 @@ interface StyledProps {
   status: string;
 }
 
+/**
+ * Retorna a cor apropriada baseada no status da consulta
+ */
 const getStatusColor = (status: string) => {
   switch (status) {
     case 'confirmed':
@@ -50,6 +59,9 @@ const getStatusColor = (status: string) => {
   }
 };
 
+/**
+ * Retorna o texto apropriado baseado no status da consulta
+ */
 const getStatusText = (status: string) => {
   switch (status) {
     case 'confirmed':
@@ -61,6 +73,10 @@ const getStatusText = (status: string) => {
   }
 };
 
+/**
+ * Tela principal do painel administrativo
+ * Permite gerenciar consultas, visualizar estatísticas e gerenciar usuários
+ */
 const AdminDashboardScreen: React.FC = () => {
   const { user, signOut } = useAuth();
   const navigation = useNavigation<AdminDashboardScreenProps['navigation']>();
@@ -69,6 +85,10 @@ const AdminDashboardScreen: React.FC = () => {
   const [statistics, setStatistics] = useState<Statistics | null>(null);
   const [loading, setLoading] = useState(true);
 
+  /**
+   * Carrega todos os dados necessários para o dashboard
+   * Inclui consultas, usuários e estatísticas gerais
+   */
   const loadData = async () => {
     try {
       // Carrega consultas
@@ -102,6 +122,9 @@ const AdminDashboardScreen: React.FC = () => {
     }, [])
   );
 
+  /**
+   * Atualiza o status de uma consulta (confirmar ou cancelar)
+   */
   const handleUpdateStatus = async (appointmentId: string, newStatus: 'confirmed' | 'cancelled') => {
     try {
       const storedAppointments = await AsyncStorage.getItem('@MedicalApp:appointments');

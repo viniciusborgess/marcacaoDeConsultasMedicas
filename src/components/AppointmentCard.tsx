@@ -4,6 +4,10 @@ import { ViewStyle } from 'react-native';
 import { Card, Text, Avatar } from 'react-native-elements';
 import theme from '../styles/theme';
 
+/**
+ * Interface para as props do card de consulta
+ * Exibe informações da consulta com status visual
+ */
 interface AppointmentCardProps {
   doctorName: string;
   date: string;
@@ -14,6 +18,10 @@ interface AppointmentCardProps {
   style?: ViewStyle;
 }
 
+/**
+ * Card que exibe informações de uma consulta médica
+ * Inclui dados do médico, data/hora, especialidade e status com cores diferenciadas
+ */
 const AppointmentCard: React.FC<AppointmentCardProps> = ({
   doctorName,
   date,
@@ -23,6 +31,9 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
   onPress,
   style,
 }) => {
+  /**
+   * Retorna a cor apropriada baseada no status da consulta
+   */
   const getStatusColor = () => {
     switch (status) {
       case 'confirmed':

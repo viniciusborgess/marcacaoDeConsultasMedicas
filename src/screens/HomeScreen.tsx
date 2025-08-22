@@ -16,6 +16,10 @@ type HomeScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Home'>;
 };
 
+/**
+ * Lista de médicos disponíveis
+ * Dados mockados para demonstração
+ */
 const doctors: Doctor[] = [
   {
     id: '1',
@@ -37,10 +41,17 @@ const doctors: Doctor[] = [
   },
 ];
 
+/**
+ * Tela principal do aplicativo para pacientes
+ * Exibe lista de consultas agendadas e permite agendar novas consultas
+ */
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [refreshing, setRefreshing] = useState(false);
 
+  /**
+   * Carrega as consultas do paciente do storage local
+   */
   const loadAppointments = async () => {
     try {
       const storedAppointments = await AsyncStorage.getItem('appointments');
@@ -58,16 +69,25 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     }, [])
   );
 
+  /**
+   * Atualiza a lista de consultas com pull-to-refresh
+   */
   const onRefresh = async () => {
     setRefreshing(true);
     await loadAppointments();
     setRefreshing(false);
   };
 
+  /**
+   * Busca informações do médico pelo ID
+   */
   const getDoctorInfo = (doctorId: string): Doctor | undefined => {
     return doctors.find(doctor => doctor.id === doctorId);
   };
 
+  /**
+   * Renderiza cada item da lista de consultas
+   */
   const renderAppointment = ({ item }: { item: Appointment }) => {
     const doctor = getDoctorInfo(item.doctorId);
     

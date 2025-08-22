@@ -17,6 +17,9 @@ type CreateAppointmentScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'CreateAppointment'>;
 };
 
+/**
+ * Interface para dados de consulta
+ */
 interface Appointment {
   id: string;
   patientId: string;
@@ -29,6 +32,9 @@ interface Appointment {
   status: 'pending' | 'confirmed' | 'cancelled';
 }
 
+/**
+ * Interface para dados do médico
+ */
 interface Doctor {
   id: string;
   name: string;
@@ -36,7 +42,10 @@ interface Doctor {
   image: string;
 }
 
-// Lista de médicos disponíveis
+/**
+ * Lista de médicos disponíveis para agendamento
+ * Dados mockados para demonstração
+ */
 const availableDoctors: Doctor[] = [
   {
     id: '1',
@@ -70,6 +79,10 @@ const availableDoctors: Doctor[] = [
   },
 ];
 
+/**
+ * Tela para criação de novas consultas médicas
+ * Permite selecionar médico, data, horário e salvar a consulta
+ */
 const CreateAppointmentScreen: React.FC = () => {
   const { user } = useAuth();
   const navigation = useNavigation<CreateAppointmentScreenProps['navigation']>();
@@ -79,6 +92,10 @@ const CreateAppointmentScreen: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  /**
+   * Cria uma nova consulta médica
+   * Valida dados, salva no storage e envia notificação para o médico
+   */
   const handleCreateAppointment = async () => {
     try {
       setLoading(true);

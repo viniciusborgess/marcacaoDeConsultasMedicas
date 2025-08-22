@@ -4,6 +4,9 @@ import { ViewStyle } from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements';
 import theme from '../styles/theme';
 
+/**
+ * Interface para dados do médico
+ */
 interface Doctor {
   id: string;
   name: string;
@@ -11,6 +14,10 @@ interface Doctor {
   image: string;
 }
 
+/**
+ * Props do componente de lista de médicos
+ * Permite seleção de médico com destaque visual
+ */
 interface DoctorListProps {
   doctors: Doctor[];
   onSelectDoctor: (doctor: Doctor) => void;
@@ -18,6 +25,10 @@ interface DoctorListProps {
   style?: ViewStyle;
 }
 
+/**
+ * Lista de médicos disponíveis para seleção
+ * Exibe avatar, nome e especialidade com destaque para o médico selecionado
+ */
 const DoctorList: React.FC<DoctorListProps> = ({
   doctors,
   onSelectDoctor,

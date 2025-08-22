@@ -1,14 +1,19 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { User, LoginCredentials, RegisterData, AuthResponse } from '../types/auth';
 
-// Chaves de armazenamento
+/**
+ * Chaves utilizadas para armazenamento local
+ */
 const STORAGE_KEYS = {
   USER: '@MedicalApp:user',
   TOKEN: '@MedicalApp:token',
   REGISTERED_USERS: '@MedicalApp:registeredUsers',
 };
 
-// Médicos mockados que podem fazer login
+/**
+ * Médicos mockados que podem fazer login
+ * Dados de demonstração para teste da aplicação
+ */
 const mockDoctors = [
   {
     id: '1',
@@ -36,7 +41,9 @@ const mockDoctors = [
   },
 ];
 
-// Admin mockado
+/**
+ * Admin mockado para demonstração
+ */
 const mockAdmin = {
   id: 'admin',
   name: 'Administrador',
@@ -45,10 +52,21 @@ const mockAdmin = {
   image: 'https://randomuser.me/api/portraits/men/3.jpg',
 };
 
-// Lista de usuários cadastrados (pacientes)
+/**
+ * Lista de usuários cadastrados (pacientes)
+ * Armazenada em memória e persistida no AsyncStorage
+ */
 let registeredUsers: (User & { password: string })[] = [];
 
+/**
+ * Serviço de autenticação
+ * Gerencia login, registro e persistência de dados de usuários
+ */
 export const authService = {
+  /**
+   * Autentica um usuário com email e senha
+   * Verifica admin, médicos e pacientes registrados
+   */
   async signIn(credentials: LoginCredentials): Promise<AuthResponse> {
     // Verifica se é o admin
     if (credentials.email === mockAdmin.email && credentials.password === '123456') {
@@ -88,6 +106,10 @@ export const authService = {
     throw new Error('Email ou senha inválidos');
   },
 
+  /**
+   * Registra um novo paciente
+   * Valida email único e cria novo usuário
+   */
   async register(data: RegisterData): Promise<AuthResponse> {
     // Verifica se o email já está em uso
     if (
@@ -123,12 +145,19 @@ export const authService = {
     };
   },
 
+  /**
+   * Faz logout do usuário
+   * Remove dados do AsyncStorage
+   */
   async signOut(): Promise<void> {
     // Limpa os dados do usuário do AsyncStorage
     await AsyncStorage.removeItem(STORAGE_KEYS.USER);
     await AsyncStorage.removeItem(STORAGE_KEYS.TOKEN);
   },
 
+  /**
+   * Recupera usuário armazenado localmente
+   */
   async getStoredUser(): Promise<User | null> {
     try {
       const userJson = await AsyncStorage.getItem(STORAGE_KEYS.USER);
@@ -142,20 +171,30 @@ export const authService = {
     }
   },
 
-  // Funções para o admin
+  /**
+   * Retorna todos os usuários (para admin)
+   */
   async getAllUsers(): Promise<User[]> {
     return [...mockDoctors, ...registeredUsers];
   },
 
+  /**
+   * Retorna todos os médicos
+   */
   async getAllDoctors(): Promise<User[]> {
     return mockDoctors;
   },
 
+  /**
+   * Retorna todos os pacientes
+   */
   async getPatients(): Promise<User[]> {
     return registeredUsers;
   },
 
-  // Função para carregar usuários registrados ao iniciar o app
+  /**
+   * Carrega usuários registrados do AsyncStorage ao iniciar o app
+   */
   async loadRegisteredUsers(): Promise<void> {
     try {
       const usersJson = await AsyncStorage.getItem(STORAGE_KEYS.REGISTERED_USERS);

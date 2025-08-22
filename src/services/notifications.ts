@@ -1,5 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+/**
+ * Interface para dados de notificação
+ */
 export interface Notification {
   id: string;
   userId: string;
@@ -13,7 +16,15 @@ export interface Notification {
 
 const STORAGE_KEY = '@MedicalApp:notifications';
 
+/**
+ * Serviço de notificações
+ * Gerencia criação, leitura e persistência de notificações do sistema
+ */
 export const notificationService = {
+  /**
+   * Busca todas as notificações de um usuário
+   * Retorna ordenadas por data de criação (mais recentes primeiro)
+   */
   async getNotifications(userId: string): Promise<Notification[]> {
     try {
       const stored = await AsyncStorage.getItem(STORAGE_KEY);
@@ -27,6 +38,10 @@ export const notificationService = {
     }
   },
 
+  /**
+   * Cria uma nova notificação
+   * Gera ID único e timestamp automaticamente
+   */
   async createNotification(notification: Omit<Notification, 'id' | 'createdAt' | 'read'>): Promise<void> {
     try {
       const stored = await AsyncStorage.getItem(STORAGE_KEY);
@@ -46,6 +61,9 @@ export const notificationService = {
     }
   },
 
+  /**
+   * Marca uma notificação específica como lida
+   */
   async markAsRead(notificationId: string): Promise<void> {
     try {
       const stored = await AsyncStorage.getItem(STORAGE_KEY);
@@ -61,6 +79,9 @@ export const notificationService = {
     }
   },
 
+  /**
+   * Marca todas as notificações de um usuário como lidas
+   */
   async markAllAsRead(userId: string): Promise<void> {
     try {
       const stored = await AsyncStorage.getItem(STORAGE_KEY);
@@ -76,6 +97,9 @@ export const notificationService = {
     }
   },
 
+  /**
+   * Remove uma notificação específica
+   */
   async deleteNotification(notificationId: string): Promise<void> {
     try {
       const stored = await AsyncStorage.getItem(STORAGE_KEY);
@@ -88,6 +112,9 @@ export const notificationService = {
     }
   },
 
+  /**
+   * Conta notificações não lidas de um usuário
+   */
   async getUnreadCount(userId: string): Promise<number> {
     try {
       const notifications = await this.getNotifications(userId);
@@ -98,7 +125,9 @@ export const notificationService = {
     }
   },
 
-  // Notificações específicas para eventos do sistema
+  /**
+   * Notifica paciente sobre confirmação de consulta
+   */
   async notifyAppointmentConfirmed(patientId: string, appointmentDetails: any): Promise<void> {
     await this.createNotification({
       userId: patientId,
@@ -109,6 +138,9 @@ export const notificationService = {
     });
   },
 
+  /**
+   * Notifica paciente sobre cancelamento de consulta
+   */
   async notifyAppointmentCancelled(patientId: string, appointmentDetails: any, reason?: string): Promise<void> {
     await this.createNotification({
       userId: patientId,
@@ -119,6 +151,9 @@ export const notificationService = {
     });
   },
 
+  /**
+   * Notifica médico sobre nova consulta agendada
+   */
   async notifyNewAppointment(doctorId: string, appointmentDetails: any): Promise<void> {
     await this.createNotification({
       userId: doctorId,
@@ -129,6 +164,9 @@ export const notificationService = {
     });
   },
 
+  /**
+   * Envia lembrete de consulta para usuário
+   */
   async notifyAppointmentReminder(userId: string, appointmentDetails: any): Promise<void> {
     await this.createNotification({
       userId: userId,

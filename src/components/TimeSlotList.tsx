@@ -3,6 +3,10 @@ import styled from 'styled-components/native';
 import { ViewStyle, TouchableOpacity } from 'react-native';
 import theme from '../styles/theme';
 
+/**
+ * Props do componente de lista de horários
+ * Permite seleção de horário com destaque visual
+ */
 interface TimeSlotListProps {
   onSelectTime: (time: string) => void;
   selectedTime?: string;
@@ -13,12 +17,18 @@ interface StyledProps {
   isSelected: boolean;
 }
 
+/**
+ * Lista de horários disponíveis para agendamento
+ * Gera horários de 30 em 30 minutos das 9h às 18h com seleção visual
+ */
 const TimeSlotList: React.FC<TimeSlotListProps> = ({
   onSelectTime,
   selectedTime,
   style,
 }) => {
-  // Gera horários de 30 em 30 minutos das 9h às 18h
+  /**
+   * Gera horários de 30 em 30 minutos das 9h às 18h
+   */
   const generateTimeSlots = () => {
     const slots: string[] = [];
     for (let hour = 9; hour < 18; hour++) {

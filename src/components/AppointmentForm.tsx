@@ -6,6 +6,10 @@ import theme from '../styles/theme';
 import { Doctor } from '../types/doctors';
 import { Appointment } from '../types/appointments';
 
+/**
+ * Lista de médicos disponíveis para agendamento
+ * Dados mockados para demonstração
+ */
 const doctors: Doctor[] = [
    {
       id: '1',
@@ -27,6 +31,9 @@ const doctors: Doctor[] = [
    },
 ];
 
+/**
+ * Props do formulário de agendamento
+ */
 type AppointmentFormProps = {
    onSubmit: (appointment: {
       doctorId: string;
@@ -36,6 +43,9 @@ type AppointmentFormProps = {
    }) => void;
 };
 
+/**
+ * Gera horários disponíveis de 30 em 30 minutos das 9h às 18h
+ */
 const generateTimeSlots = () => {
    const slots = [];
    for (let hour = 9; hour < 18; hour++) {
@@ -45,6 +55,10 @@ const generateTimeSlots = () => {
    return slots;
 };
 
+/**
+ * Formulário completo para agendamento de consultas médicas
+ * Permite selecionar médico, data, horário e descrição da consulta
+ */
 const AppointmentForm: React.FC<AppointmentFormProps> = ({ onSubmit }) => {
    const [selectedDoctor, setSelectedDoctor] = useState<string>('');
    const [dateInput, setDateInput] = useState('');
@@ -52,6 +66,10 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ onSubmit }) => {
    const [description, setDescription] = useState('');
    const timeSlots = generateTimeSlots();
 
+   /**
+    * Valida se a data inserida está no formato correto e dentro do período permitido
+    * Aceita datas de hoje até 3 meses no futuro
+    */
    const validateDate = (inputDate: string) => {
       const dateRegex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
       const match = inputDate.match(dateRegex);
@@ -66,6 +84,10 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ onSubmit }) => {
       return date >= today && date <= maxDate;
    };
 
+   /**
+    * Formata a data enquanto o usuário digita
+    * Aplica máscara DD/MM/AAAA automaticamente
+    */
    const handleDateChange = (text: string) => {
       // Remove todos os caracteres não numéricos
       const numbers = text.replace(/\D/g, '');
@@ -85,6 +107,9 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ onSubmit }) => {
       setDateInput(formattedDate);
    };
 
+   /**
+    * Valida e submete o formulário de agendamento
+    */
    const handleSubmit = () => {
       if (!selectedDoctor || !selectedTime || !description) {
          alert('Por favor, preencha todos os campos');
@@ -107,6 +132,10 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ onSubmit }) => {
       });
    };
 
+   /**
+    * Verifica se um horário está disponível para agendamento
+    * TODO: Implementar verificação real de disponibilidade
+    */
    const isTimeSlotAvailable = (time: string) => {
       // Aqui você pode adicionar lógica para verificar se o horário está disponível
       // Por exemplo, verificar se já existe uma consulta agendada para este horário

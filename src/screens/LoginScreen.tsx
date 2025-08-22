@@ -12,6 +12,10 @@ type LoginScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Login'>;
 };
 
+/**
+ * Tela de login do aplicativo
+ * Permite autenticação de usuários e navegação para cadastro
+ */
 const LoginScreen: React.FC = () => {
   const { signIn } = useAuth();
   const navigation = useNavigation<LoginScreenProps['navigation']>();
@@ -20,6 +24,10 @@ const LoginScreen: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  /**
+   * Processa o login do usuário
+   * Valida credenciais e autentica através do contexto de autenticação
+   */
   const handleLogin = async () => {
     try {
       setLoading(true);

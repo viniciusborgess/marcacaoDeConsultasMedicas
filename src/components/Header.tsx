@@ -5,6 +5,10 @@ import { useAuth } from '../contexts/AuthContext';
 import NotificationBell from './NotificationBell';
 import theme from '../styles/theme';
 
+/**
+ * Cabeçalho principal da aplicação
+ * Exibe informações do usuário logado e campainha de notificações
+ */
 const Header: React.FC = () => {
   const { user } = useAuth();
 

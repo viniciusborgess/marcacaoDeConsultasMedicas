@@ -3,6 +3,10 @@ import styled from 'styled-components/native';
 import { ViewStyle } from 'react-native';
 import theme from '../styles/theme';
 
+/**
+ * Props do card de estatísticas
+ * Exibe métricas com título, valor, subtítulo opcional e ícone
+ */
 interface StatisticsCardProps {
   title: string;
   value: string | number;
@@ -12,6 +16,10 @@ interface StatisticsCardProps {
   style?: ViewStyle;
 }
 
+/**
+ * Card para exibir estatísticas e métricas
+ * Usado em dashboards para mostrar dados importantes com design visual atrativo
+ */
 const StatisticsCard: React.FC<StatisticsCardProps> = ({
   title,
   value,

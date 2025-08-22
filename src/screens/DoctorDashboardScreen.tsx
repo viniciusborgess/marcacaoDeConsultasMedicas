@@ -19,6 +19,9 @@ type DoctorDashboardScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'DoctorDashboard'>;
 };
 
+/**
+ * Interface para dados de consulta
+ */
 interface Appointment {
   id: string;
   patientId: string;
@@ -35,6 +38,9 @@ interface StyledProps {
   status: string;
 }
 
+/**
+ * Retorna a cor apropriada baseada no status da consulta
+ */
 const getStatusColor = (status: string) => {
   switch (status) {
     case 'confirmed':
@@ -46,6 +52,9 @@ const getStatusColor = (status: string) => {
   }
 };
 
+/**
+ * Retorna o texto apropriado baseado no status da consulta
+ */
 const getStatusText = (status: string) => {
   switch (status) {
     case 'confirmed':
@@ -57,6 +66,10 @@ const getStatusText = (status: string) => {
   }
 };
 
+/**
+ * Tela principal do dashboard do médico
+ * Permite visualizar consultas, estatísticas pessoais e gerenciar status das consultas
+ */
 const DoctorDashboardScreen: React.FC = () => {
   const { user, signOut } = useAuth();
   const navigation = useNavigation<DoctorDashboardScreenProps['navigation']>();
@@ -67,6 +80,9 @@ const DoctorDashboardScreen: React.FC = () => {
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const [actionType, setActionType] = useState<'confirm' | 'cancel'>('confirm');
 
+  /**
+   * Carrega consultas do médico logado e suas estatísticas
+   */
   const loadAppointments = async () => {
     try {
       const storedAppointments = await AsyncStorage.getItem('@MedicalApp:appointments');
@@ -90,17 +106,27 @@ const DoctorDashboardScreen: React.FC = () => {
     }
   };
 
+  /**
+   * Abre o modal de confirmação/cancelamento de consulta
+   */
   const handleOpenModal = (appointment: Appointment, action: 'confirm' | 'cancel') => {
     setSelectedAppointment(appointment);
     setActionType(action);
     setModalVisible(true);
   };
 
+  /**
+   * Fecha o modal de ação
+   */
   const handleCloseModal = () => {
     setModalVisible(false);
     setSelectedAppointment(null);
   };
 
+  /**
+   * Confirma a ação (confirmar ou cancelar) da consulta
+   * Atualiza o status e envia notificação para o paciente
+   */
   const handleConfirmAction = async (reason?: string) => {
     if (!selectedAppointment) return;
 

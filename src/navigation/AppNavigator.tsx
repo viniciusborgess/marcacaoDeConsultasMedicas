@@ -19,6 +19,10 @@ import SettingsScreen from '../screens/SettingsScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+/**
+ * Navegador principal da aplicação
+ * Gerencia rotas baseadas no estado de autenticação e tipo de usuário
+ */
 export const AppNavigator: React.FC = () => {
   const { user, loading } = useAuth();
 
@@ -34,14 +38,15 @@ export const AppNavigator: React.FC = () => {
         }}
       >
         {!user ? (
-          // Rotas públicas
+          // Rotas públicas - acessíveis sem autenticação
           <>
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />
           </>
         ) : (
-          // Rotas protegidas
+          // Rotas protegidas - acessíveis apenas com autenticação
           <>
+            {/* Dashboard específico baseado no tipo de usuário */}
             {user.role === 'admin' && (
               <Stack.Screen 
                 name="AdminDashboard" 

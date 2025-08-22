@@ -12,6 +12,10 @@ type RegisterScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Register'>;
 };
 
+/**
+ * Tela de cadastro de novos pacientes
+ * Permite criar conta de usuário e navegar de volta para login
+ */
 const RegisterScreen: React.FC = () => {
   const { register } = useAuth();
   const navigation = useNavigation<RegisterScreenProps['navigation']>();
@@ -21,6 +25,10 @@ const RegisterScreen: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  /**
+   * Processa o cadastro do novo usuário
+   * Valida campos obrigatórios e registra através do contexto de autenticação
+   */
   const handleRegister = async () => {
     try {
       setLoading(true);

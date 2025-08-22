@@ -4,6 +4,10 @@ import { Modal, ViewStyle } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import theme from '../styles/theme';
 
+/**
+ * Interface para as props do modal de ação de consulta
+ * Permite confirmar ou cancelar consultas com motivo opcional
+ */
 interface AppointmentActionModalProps {
   visible: boolean;
   onClose: () => void;
@@ -18,6 +22,10 @@ interface AppointmentActionModalProps {
   };
 }
 
+/**
+ * Modal para confirmar ou cancelar consultas médicas
+ * Exibe detalhes da consulta e permite inserir motivo do cancelamento
+ */
 const AppointmentActionModal: React.FC<AppointmentActionModalProps> = ({
   visible,
   onClose,
@@ -27,12 +35,18 @@ const AppointmentActionModal: React.FC<AppointmentActionModalProps> = ({
 }) => {
   const [reason, setReason] = React.useState('');
 
+  /**
+   * Confirma a ação (confirmar ou cancelar) e limpa o formulário
+   */
   const handleConfirm = () => {
     onConfirm(reason.trim() || undefined);
     setReason('');
     onClose();
   };
 
+  /**
+   * Fecha o modal e limpa o formulário
+   */
   const handleClose = () => {
     setReason('');
     onClose();

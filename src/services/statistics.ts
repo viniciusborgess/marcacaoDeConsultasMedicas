@@ -1,5 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+/**
+ * Interface para dados de consulta
+ */
 interface Appointment {
   id: string;
   patientId: string;
@@ -12,6 +15,10 @@ interface Appointment {
   status: 'pending' | 'confirmed' | 'cancelled';
 }
 
+/**
+ * Interface para dados de estatísticas
+ * Contém métricas gerais e específicas por usuário
+ */
 export interface Statistics {
   totalAppointments: number;
   confirmedAppointments: number;
@@ -28,7 +35,15 @@ export interface Statistics {
   };
 }
 
+/**
+ * Serviço de estatísticas
+ * Calcula métricas baseadas nos dados de consultas armazenados
+ */
 export const statisticsService = {
+  /**
+   * Calcula estatísticas gerais do sistema
+   * Inclui totais, percentuais e distribuições por especialidade e mês
+   */
   async getGeneralStatistics(): Promise<Statistics> {
     try {
       const appointmentsData = await AsyncStorage.getItem('@MedicalApp:appointments');
@@ -101,6 +116,10 @@ export const statisticsService = {
     }
   },
 
+  /**
+   * Calcula estatísticas específicas de um médico
+   * Inclui suas consultas, pacientes e percentuais de status
+   */
   async getDoctorStatistics(doctorId: string): Promise<Partial<Statistics>> {
     try {
       const appointmentsData = await AsyncStorage.getItem('@MedicalApp:appointments');
@@ -136,6 +155,10 @@ export const statisticsService = {
     }
   },
 
+  /**
+   * Calcula estatísticas específicas de um paciente
+   * Inclui suas consultas, médicos consultados e especialidades
+   */
   async getPatientStatistics(patientId: string): Promise<Partial<Statistics>> {
     try {
       const appointmentsData = await AsyncStorage.getItem('@MedicalApp:appointments');

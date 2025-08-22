@@ -7,11 +7,18 @@ import { useNavigation } from '@react-navigation/native';
 import { notificationService } from '../services/notifications';
 import theme from '../styles/theme';
 
+/**
+ * Componente de campainha de notificações
+ * Exibe contador de notificações não lidas e navega para tela de notificações
+ */
 const NotificationBell: React.FC = () => {
   const { user } = useAuth();
   const navigation = useNavigation();
   const [unreadCount, setUnreadCount] = useState(0);
 
+  /**
+   * Carrega o número de notificações não lidas do usuário
+   */
   const loadUnreadCount = async () => {
     if (!user?.id) return;
     
@@ -23,6 +30,9 @@ const NotificationBell: React.FC = () => {
     }
   };
 
+  /**
+   * Configura carregamento inicial e atualização periódica do contador
+   */
   useEffect(() => {
     loadUnreadCount();
     
@@ -32,12 +42,17 @@ const NotificationBell: React.FC = () => {
     return () => clearInterval(interval);
   }, [user?.id]);
 
-  // Atualiza quando a tela volta ao foco
+  /**
+   * Atualiza contador quando a tela volta ao foco
+   */
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', loadUnreadCount);
     return unsubscribe;
   }, [navigation, user?.id]);
 
+  /**
+   * Navega para a tela de notificações ao tocar na campainha
+   */
   const handlePress = () => {
     navigation.navigate('Notifications' as never);
   };

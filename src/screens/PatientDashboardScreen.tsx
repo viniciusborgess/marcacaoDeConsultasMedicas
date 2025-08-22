@@ -15,6 +15,9 @@ type PatientDashboardScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'PatientDashboard'>;
 };
 
+/**
+ * Interface para dados de consulta
+ */
 interface Appointment {
   id: string;
   patientId: string;
@@ -31,6 +34,9 @@ interface StyledProps {
   status: string;
 }
 
+/**
+ * Retorna a cor apropriada baseada no status da consulta
+ */
 const getStatusColor = (status: string) => {
   switch (status) {
     case 'confirmed':
@@ -42,6 +48,9 @@ const getStatusColor = (status: string) => {
   }
 };
 
+/**
+ * Retorna o texto apropriado baseado no status da consulta
+ */
 const getStatusText = (status: string) => {
   switch (status) {
     case 'confirmed':
@@ -53,12 +62,19 @@ const getStatusText = (status: string) => {
   }
 };
 
+/**
+ * Tela principal do dashboard do paciente
+ * Exibe consultas agendadas e permite navegar para outras funcionalidades
+ */
 const PatientDashboardScreen: React.FC = () => {
   const { user, signOut } = useAuth();
   const navigation = useNavigation<PatientDashboardScreenProps['navigation']>();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
 
+  /**
+   * Carrega as consultas do paciente logado do storage local
+   */
   const loadAppointments = async () => {
     try {
       const storedAppointments = await AsyncStorage.getItem('@MedicalApp:appointments');
@@ -243,4 +259,4 @@ const StatusText = styled.Text<StyledProps>`
   font-weight: 500;
 `;
 
-export default PatientDashboardScreen; 
+export default PatientDashboardScreen;
